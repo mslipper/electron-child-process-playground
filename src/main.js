@@ -22,8 +22,6 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  mainWindow.webContents.openDevTools();
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -56,7 +54,7 @@ app.on('activate', function () {
 
 ipcMain.on('fork', (e) => {
   const p = fork(path.join(__dirname, 'child.js'), ['hello'], {
-    stdio: 'pipe',
+    stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
   });
   p.stdout.on('data', (d) => {
     e.reply('data', '[stdout-main-fork] ' + d.toString());

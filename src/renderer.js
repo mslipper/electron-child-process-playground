@@ -5,7 +5,7 @@ const {ipcRenderer} = require('electron');
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('fork-renderer').addEventListener('click', () => {
     const p = fork(path.join(__dirname, 'child.js'), ['hello'], {
-      stdio: 'pipe',
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
     });
     p.stdout.on('data', (d) => {
       writeData('[stdout-renderer-fork] ' + d.toString());
